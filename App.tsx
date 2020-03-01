@@ -1,19 +1,20 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import styled from "styled-components";
+import { DecksContextProvider } from "./src/context/decks";
+import { NavigationRoot } from "./src/navigation";
+import { View } from "./src/components/react-native-defaults";
+
+const AppRoot = styled(View)`
+  background-color: rgb(30, 30, 32);
+  height: 100%;
+`;
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+    <AppRoot>
+      <DecksContextProvider>
+        <NavigationRoot />
+      </DecksContextProvider>
+    </AppRoot>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
