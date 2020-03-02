@@ -1,14 +1,17 @@
-import React, { useState } from "react";
-import { assoc, prop } from "ramda";
-import { FlatList } from "react-native";
+import React, { useState, useLayoutEffect } from "react";
+import { assoc, prop, update } from "ramda";
+import { FlatList, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { TextInput, Text, Button } from "../react-native-defaults";
-import { Deck } from "../../context/decks";
+import { TextInput, Text, Button, View } from "../react-native-defaults";
+import { Deck, Notecard, useDecksContext } from "../../context/decks";
 import { PageWrapper } from "../PageWrapper";
 import { SectionHeader } from "../SectionHeader";
 import { ListItem } from "../ListItem";
 import { blue } from "../../utils/colors";
 import { NavigationProp } from "@react-navigation/native";
+import { Space, Sizes } from "../Space";
+import { positiveHeaderButtonStyles } from "../../utils/navigation";
+import { useCreateNavigationValue } from "../../context/navigation";
 
 export const DeckManagement = ({
   deck,
@@ -19,15 +22,42 @@ export const DeckManagement = ({
   onCommit: (deck: Deck) => void;
   navigation: NavigationProp<any, any>;
 }) => {
+  const [decks] = useDecksContext();
   const [deckState, setDeckState] = useState(deck);
+  const createNavigationValue = useCreateNavigationValue();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Ionicons
+          name="ios-checkmark"
+          {...positiveHeaderButtonStyles}
+          onPress={() => {
+            const duplicate = decks.find(deck => deck.name === deckState.name);
+            if (duplicate) {
+              Alert.alert(
+                "Duplicate Deck",
+                "This deck appears to have the same name as another deck."
+              );
+            } else if (!deckState.name) {
+              Alert.alert("Missing Name", `You are missing the deck's name.`);
+            } else {
+              onCommit(deckState);
+            }
+          }}
+        />
+      )
+    });
+  }, [navigation, deckState]);
 
   return (
-    <PageWrapper>
+    <PageWrapper as={View}>
       <TextInput
         label="Deck Name"
         value={deckState.name}
         onChange={newName => setDeckState(assoc("name", newName))}
       />
+      <Space vertical={Sizes.medium} />
       <SectionHeader
         rightButton={
           <Ionicons
@@ -36,7 +66,16 @@ export const DeckManagement = ({
             style={{ color: blue, paddingLeft: 16, paddingRight: 16 }}
             onPress={() =>
               navigation.navigate("AddNotecard", {
-                deck: deckState
+                id: createNavigationValue({
+                  deck: deckState,
+                  onCommit: (newNotecard: Notecard) => {
+                    setDeckState(currentDeck => ({
+                      ...currentDeck,
+                      notecards: currentDeck.notecards.concat(newNotecard)
+                    }));
+                    navigation.goBack();
+                  }
+                })
               })
             }
           />
@@ -46,16 +85,43 @@ export const DeckManagement = ({
       </SectionHeader>
       {deckState.notecards.length ? (
         <FlatList
+          style={{ height: "100%" }}
           data={deckState.notecards}
           renderItem={({ item }) => (
-            <ListItem subText={item.description}>{item.term}</ListItem>
+            <ListItem
+              subText={item.description}
+              onPress={() => {
+                navigation.navigate("EditNotecard", {
+                  id: createNavigationValue({
+                    deck: deckState,
+                    notecardTerm: item.term,
+                    onCommit: (newNotecard: Notecard) => {
+                      setDeckState(currentDeck => ({
+                        ...currentDeck,
+                        notecards: update(
+                          currentDeck.notecards.indexOf(item),
+                          newNotecard,
+                          currentDeck.notecards
+                        )
+                      }));
+                      navigation.goBack();
+                    }
+                  })
+                });
+              }}
+            >
+              {item.term}
+            </ListItem>
           )}
           keyExtractor={prop("term")}
         />
       ) : (
-        <Text style={{ textAlign: "center" }}>
-          This deck has no notecards. Add notecards by pressing the add button
-        </Text>
+        <>
+          <Space vertical={Sizes.medium} />
+          <Text style={{ textAlign: "center" }}>
+            This deck has no notecards. Add notecards by pressing the add button
+          </Text>
+        </>
       )}
     </PageWrapper>
   );

@@ -4,7 +4,7 @@ import { Text, View } from "../react-native-defaults";
 import { text } from "../../utils/colors";
 
 const SectionHeaderContainer = styled(View)`
-  margin: 8px 0;
+  margin: 8px 0 0;
   width: 100%;
   border-bottom-width: 1px;
   border-color: ${text};

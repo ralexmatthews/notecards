@@ -33,9 +33,17 @@ export const DecksContextProvider = (props: any) => {
       {...props}
       value={[
         decks,
-        (decks: Deck[]) => {
-          AsyncStorage.setItem(DECKS_ASYNC_KEY, JSON.stringify(decks));
-          setDecks(decks);
+        (decks: Deck[] | ((currentDecks: Deck[]) => Deck[])) => {
+          setDecks(currentDecks => {
+            if (typeof decks == "function") {
+              const value = decks(currentDecks);
+              AsyncStorage.setItem(DECKS_ASYNC_KEY, JSON.stringify(value));
+              return value;
+            } else {
+              AsyncStorage.setItem(DECKS_ASYNC_KEY, JSON.stringify(decks));
+              return decks;
+            }
+          });
         }
       ]}
     />

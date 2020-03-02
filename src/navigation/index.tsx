@@ -1,12 +1,15 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, NavigationProp } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "./HomeScreen";
 import { background, text, backgroundAccent, blue } from "../utils/colors";
 import { positiveHeaderButtonStyles } from "../utils/navigation";
 import { NewDeckScreen } from "./NewDeckScreen";
-import { AddNotecardScreen } from "./AddNotecard";
+import { EditDeckScreen, EditDeckRoute } from "./EditDeckScreen";
+import { EditNotecardScreen, EditNotecardRoute } from "./EditNotecardScreen";
+import { AddNotecardScreen } from "./AddNotecardScreen";
+import { BackButton } from "../components/BackButton";
 
 const Stack = createStackNavigator();
 
@@ -29,6 +32,7 @@ export const NavigationRoot = () => {
           name="Home"
           component={HomeScreen}
           options={({ navigation }) => ({
+            headerTitle: "Decks",
             headerRight: props => (
               <Ionicons
                 {...positiveHeaderButtonStyles}
@@ -42,16 +46,44 @@ export const NavigationRoot = () => {
         <Stack.Screen
           name="NewDeck"
           component={NewDeckScreen}
-          options={{
-            headerTitle: "New Deck"
-          }}
+          options={({ navigation }) => ({
+            headerTitle: "New Deck",
+            headerLeft: () => <BackButton navigation={navigation} />
+          })}
+        />
+        <Stack.Screen
+          name="EditDeck"
+          component={EditDeckScreen}
+          options={({
+            navigation,
+            route
+          }: {
+            route: EditDeckRoute;
+            navigation: NavigationProp<any, any>;
+          }) => ({
+            headerTitle: route.params.deckName,
+            headerLeft: () => <BackButton navigation={navigation} />
+          })}
         />
         <Stack.Screen
           name="AddNotecard"
           component={AddNotecardScreen}
-          options={{
-            headerTitle: "Add Notecard"
-          }}
+          options={({ navigation }) => ({
+            headerTitle: "Add Notecard",
+            headerLeft: () => <BackButton navigation={navigation} />
+          })}
+        />
+        <Stack.Screen
+          name="EditNotecard"
+          component={EditNotecardScreen}
+          options={({
+            navigation
+          }: {
+            navigation: NavigationProp<any, any>;
+          }) => ({
+            headerTitle: " Edit Notecard",
+            headerLeft: () => <BackButton navigation={navigation} />
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>

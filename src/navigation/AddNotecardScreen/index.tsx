@@ -1,30 +1,30 @@
 import React from "react";
 import styled from "styled-components";
 import { NotecardManagement } from "../../components/NotecardManagement";
-import { useDeck, Deck } from "../../context/decks";
 import { NavigationProp, Route } from "@react-navigation/native";
+import { useNavigationValue } from "../../context/navigation";
+import { Deck, Notecard } from "../../context/decks";
 
 interface AddNotecardRoute extends Route<any> {
   params: {
-    deck: Deck;
+    id: string;
   };
 }
 
-export const AddNotecardScreen = ({
-  navigation,
-  route
-}: {
-  navigation: NavigationProp<any, any>;
-  route: AddNotecardRoute;
-}) => {
+export const AddNotecardScreen = ({ route }: { route: AddNotecardRoute }) => {
+  const [{ deck, onCommit }] = useNavigationValue<{
+    deck: Deck;
+    onCommit: (notecard: Notecard) => void;
+  }>(route.params.id);
+
   return (
     <NotecardManagement
       notecard={{
         term: "",
         description: ""
       }}
-      deck={route.params.deck}
-      onCommit={console.log}
+      deck={deck}
+      onCommit={onCommit}
     />
   );
 };
