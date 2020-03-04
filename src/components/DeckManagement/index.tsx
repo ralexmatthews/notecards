@@ -33,7 +33,9 @@ export const DeckManagement = ({
           name="ios-checkmark"
           {...positiveHeaderButtonStyles}
           onPress={() => {
-            const duplicate = decks.find(deck => deck.name === deckState.name);
+            const duplicate =
+              deckState.name !== deck.name &&
+              !!decks.find(deck => deck.name === deckState.name);
             if (duplicate) {
               Alert.alert(
                 "Duplicate Deck",

@@ -10,6 +10,7 @@ export const PageWrapper = styled(props => (
     {...props}
   />
 ))`
+  overflow: visible;
   margin: 0 16px;
   padding: 16px 0;
 `;

@@ -4,6 +4,7 @@ import {
   View as RNView,
   Text as RNText,
   TextInput as RNTextInput,
+  TextInputProps,
   Button as RNButton
 } from "react-native";
 import { text, background, borderColor } from "../../utils/colors";
@@ -25,19 +26,23 @@ export const Input = styled(RNTextInput)`
   font-size: 16px;
 `;
 
+type Overwrite<T, U> = Pick<T, Exclude<keyof T, keyof U>> & U;
+type TextInputType = Overwrite<
+  TextInputProps,
+  { onChange: (newValue: string) => void }
+>;
+
 export const TextInput = ({
   label,
   value,
   onChange,
   ...rest
-}: {
-  label: string;
+}: TextInputType & {
+  label?: string;
   value: string;
-  onChange: (newValue: string) => void;
-  multiline?: boolean;
 }) => (
   <>
-    <Text style={{ paddingBottom: 4 }}>{label}</Text>
+    {!!label && <Text style={{ paddingBottom: 4 }}>{label}</Text>}
     <Input {...rest} onChangeText={onChange} value={value} />
   </>
 );

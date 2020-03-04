@@ -5,14 +5,19 @@ import { Ionicons } from "@expo/vector-icons";
 import { useDecksContext } from "../../context/decks";
 import { ListItem } from "../../components/ListItem";
 import { Text } from "../../components/react-native-defaults";
-import { text, blue } from "../../utils/colors";
+import { blue } from "../../utils/colors";
+import { NavigationProp } from "@react-navigation/native";
 
 const NoDecksText = styled(Text)`
   text-align: center;
   margin: 16px;
 `;
 
-export const HomeScreen = ({ navigation }) => {
+export const HomeScreen = ({
+  navigation
+}: {
+  navigation: NavigationProp<any, any>;
+}) => {
   const [decks] = useDecksContext();
   return decks.length ? (
     <FlatList
@@ -31,7 +36,9 @@ export const HomeScreen = ({ navigation }) => {
                 padding: 8,
                 paddingLeft: 24
               }}
-              onPress={() => console.log("play")}
+              onPress={() =>
+                navigation.navigate("PlaySelector", { deckName: item.name })
+              }
             />
           }
         >

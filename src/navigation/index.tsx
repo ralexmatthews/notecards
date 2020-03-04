@@ -10,6 +10,7 @@ import { EditDeckScreen, EditDeckRoute } from "./EditDeckScreen";
 import { EditNotecardScreen, EditNotecardRoute } from "./EditNotecardScreen";
 import { AddNotecardScreen } from "./AddNotecardScreen";
 import { BackButton } from "../components/BackButton";
+import { PlaySelectorScreen } from "./PlaySelectorScreen";
 
 const Stack = createStackNavigator();
 
@@ -81,7 +82,19 @@ export const NavigationRoot = () => {
           }: {
             navigation: NavigationProp<any, any>;
           }) => ({
-            headerTitle: " Edit Notecard",
+            headerTitle: "Edit Notecard",
+            headerLeft: () => <BackButton navigation={navigation} />
+          })}
+        />
+        <Stack.Screen
+          name="PlaySelector"
+          component={PlaySelectorScreen}
+          options={({
+            navigation
+          }: {
+            navigation: NavigationProp<any, any>;
+          }) => ({
+            headerTitle: "Select Study Type",
             headerLeft: () => <BackButton navigation={navigation} />
           })}
         />
