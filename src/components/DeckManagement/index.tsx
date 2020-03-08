@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect } from "react";
-import { assoc, prop, update } from "ramda";
+import { assoc, prop, update, equals } from "ramda";
 import { FlatList, Alert } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, Entypo } from "@expo/vector-icons";
 import { TextInput, Text, Button, View } from "../react-native-defaults";
 import { Deck, Notecard, useDecksContext } from "../../context/decks";
 import { PageWrapper } from "../PageWrapper";
@@ -28,6 +28,35 @@ export const DeckManagement = ({
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      headerLeft: () => (
+        <Entypo
+          size={42}
+          style={{ marginBottom: 8, color: blue }}
+          name="chevron-small-left"
+          onPress={() => {
+            if (equals(deckState, deck)) {
+              navigation.goBack();
+            } else {
+              Alert.alert(
+                "Unsaved Changes",
+                "You have unsaved changes. Are you sure you want to lose your changes?",
+                [
+                  {
+                    text: "Go Back",
+                    style: "destructive",
+                    onPress: () => navigation.goBack()
+                  },
+                  {
+                    text: "Cancel",
+                    style: "cancel",
+                    onPress: () => {}
+                  }
+                ]
+              );
+            }
+          }}
+        />
+      ),
       headerRight: () => (
         <Ionicons
           name="ios-checkmark"
