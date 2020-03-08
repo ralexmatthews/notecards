@@ -9,12 +9,12 @@ const ButtonBackground = styled(View)`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 48px;
+  min-height: 48px;
   margin: 8px 0;
+  padding: 8px;
   border-radius: 4px;
   border-width: 1px;
   border-color: white;
-  background-color: rgb(0, 200, 255);
   box-shadow: 0px 0px 5px #fff;
 `;
 const TextForeground = styled(Text)`
@@ -28,16 +28,24 @@ export const StylishButton = ({
   children,
   title,
   style,
+  active,
   ...rest
 }: {
   onPress: () => void;
   children?: React.ReactNode;
   title?: string;
   style?: any;
+  active?: boolean;
 }) => {
   return (
     <TouchableHighlight onPress={onPress}>
-      <ButtonBackground style={style} {...rest}>
+      <ButtonBackground
+        style={[
+          { backgroundColor: active ? "rgb(0, 255, 200)" : "rgb(0, 200, 255)" },
+          style
+        ]}
+        {...rest}
+      >
         {title ? <TextForeground>{title}</TextForeground> : children}
       </ButtonBackground>
     </TouchableHighlight>

@@ -92,13 +92,33 @@ export const PlaySelectorScreen = ({
           style={{ color: text }}
         />
       </CardCountWrapper>
-      <StylishButton onPress={console.log} title="Multiple Choice" />
+      {Number(cardCount) >= 4 && (
+        <StylishButton
+          onPress={() =>
+            navigation.navigate("MultipleChoice", {
+              deckName: deck.name,
+              cardCount: Number(cardCount)
+            })
+          }
+          title="Multiple Choice"
+        />
+      )}
       <StylishButton
-        onPress={console.log}
+        onPress={() =>
+          navigation.navigate("", {
+            deckName: deck.name,
+            cardCount: Number(cardCount)
+          })
+        }
         title="Guess Description From Term"
       />
       <StylishButton
-        onPress={console.log}
+        onPress={() =>
+          navigation.navigate("", {
+            deckName: deck.name,
+            cardCount: Number(cardCount)
+          })
+        }
         title="Guess Term From Description"
       />
     </PageWrapper>

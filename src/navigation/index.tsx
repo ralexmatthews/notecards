@@ -11,6 +11,7 @@ import { EditNotecardScreen, EditNotecardRoute } from "./EditNotecardScreen";
 import { AddNotecardScreen } from "./AddNotecardScreen";
 import { BackButton } from "../components/BackButton";
 import { PlaySelectorScreen } from "./PlaySelectorScreen";
+import { MultipleChoiceScreen } from "./MultipleChoiceScreen";
 
 const Stack = createStackNavigator();
 
@@ -95,6 +96,18 @@ export const NavigationRoot = () => {
             navigation: NavigationProp<any, any>;
           }) => ({
             headerTitle: "Select Study Type",
+            headerLeft: () => <BackButton navigation={navigation} />
+          })}
+        />
+        <Stack.Screen
+          name="MultipleChoice"
+          component={MultipleChoiceScreen}
+          options={({
+            navigation
+          }: {
+            navigation: NavigationProp<any, any>;
+          }) => ({
+            headerTitle: "Multiple Choice Quiz",
             headerLeft: () => <BackButton navigation={navigation} />
           })}
         />
