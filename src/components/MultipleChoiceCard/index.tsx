@@ -27,12 +27,14 @@ export const MultipleChoiceCard = ({
   notecard,
   deckName,
   answer,
-  setAnswer
+  setAnswer,
+  graded
 }: {
   notecard: Notecard;
   deckName: string;
   answer: Notecard | null;
   setAnswer: (answer: Notecard) => void;
+  graded: boolean;
 }) => {
   const { width } = Dimensions.get("window");
   const [deck] = useDeck(deckName);
@@ -45,7 +47,7 @@ export const MultipleChoiceCard = ({
           .sort((_, __) => Math.random() - 0.5)
           .reduce<Notecard[]>(
             (acc, currentNotecard) =>
-              acc.length < 4 && notecard.term !== currentNotecard.term
+              acc.length < 3 && notecard.term !== currentNotecard.term
                 ? [...acc, currentNotecard]
                 : acc,
             []
@@ -64,9 +66,18 @@ export const MultipleChoiceCard = ({
         />
         {options.map(option => (
           <StylishButton
-            active={!!answer && answer.term === option.term}
+            active={
+              graded
+                ? option.term === notecard.term
+                : !!answer && answer.term === option.term
+            }
+            wrong={
+              graded &&
+              option.term === answer?.term &&
+              notecard.term !== answer.term
+            }
             key={option.term}
-            onPress={() => setAnswer(option)}
+            onPress={() => !graded && setAnswer(option)}
             title={option.term}
           />
         ))}

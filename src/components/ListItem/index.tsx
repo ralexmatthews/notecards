@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { View, Text } from "../react-native-defaults";
 import { TouchableHighlight } from "react-native";
+import Swipeout from "react-native-swipeout";
 import { text } from "../../utils/colors";
 
 const SubText = styled(Text)`
@@ -23,32 +24,49 @@ export const ListItem = ({
   children,
   subText,
   onPress,
+  onDelete,
   sideButton,
   ...rest
 }: {
   children: string;
   subText?: string;
   onPress?: () => void;
+  onDelete?: () => void;
   sideButton?: React.ReactElement;
 }) => (
-  <TouchableHighlight onPress={onPress ?? undefined}>
-    <ListItemRoot {...rest}>
-      <View>
-        <Text
-          style={
-            !subText
-              ? {
-                  marginTop: 8,
-                  marginBottom: 8
-                }
-              : undefined
-          }
-        >
-          {children}
-        </Text>
-        {subText && <SubText numberOfLines={1}>{subText}</SubText>}
-      </View>
-      {sideButton || <View />}
-    </ListItemRoot>
-  </TouchableHighlight>
+  <Swipeout
+    right={
+      onDelete
+        ? [
+            {
+              text: "Delete",
+              color: text,
+              backgroundColor: "rgb(255, 100, 100)",
+              onPress: onDelete
+            }
+          ]
+        : undefined
+    }
+  >
+    <TouchableHighlight onPress={onPress ?? undefined}>
+      <ListItemRoot {...rest}>
+        <View>
+          <Text
+            style={
+              !subText
+                ? {
+                    marginTop: 8,
+                    marginBottom: 8
+                  }
+                : undefined
+            }
+          >
+            {children}
+          </Text>
+          {subText && <SubText numberOfLines={1}>{subText}</SubText>}
+        </View>
+        {sideButton || <View />}
+      </ListItemRoot>
+    </TouchableHighlight>
+  </Swipeout>
 );

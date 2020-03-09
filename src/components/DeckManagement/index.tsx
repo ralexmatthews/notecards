@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect } from "react";
 import { assoc, prop, update, equals } from "ramda";
-import { FlatList, Alert } from "react-native";
+import { FlatList, Alert, ScrollView } from "react-native";
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import { TextInput, Text, Button, View } from "../react-native-defaults";
 import { Deck, Notecard, useDecksContext } from "../../context/decks";
@@ -82,7 +82,7 @@ export const DeckManagement = ({
   }, [navigation, deckState]);
 
   return (
-    <PageWrapper as={View}>
+    <PageWrapper bounces={false}>
       <TextInput
         label="Deck Name"
         value={deckState.name}

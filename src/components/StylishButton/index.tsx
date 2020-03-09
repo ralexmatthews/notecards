@@ -29,6 +29,7 @@ export const StylishButton = ({
   title,
   style,
   active,
+  wrong,
   ...rest
 }: {
   onPress: () => void;
@@ -36,12 +37,19 @@ export const StylishButton = ({
   title?: string;
   style?: any;
   active?: boolean;
+  wrong?: boolean;
 }) => {
   return (
     <TouchableHighlight onPress={onPress}>
       <ButtonBackground
         style={[
-          { backgroundColor: active ? "rgb(0, 255, 200)" : "rgb(0, 200, 255)" },
+          {
+            backgroundColor: wrong
+              ? "rgb(255, 100, 100)"
+              : active
+              ? "rgb(0, 255, 200)"
+              : "rgb(0, 200, 255)"
+          },
           style
         ]}
         {...rest}
