@@ -105,7 +105,7 @@ export const PlaySelectorScreen = ({
       )}
       <StylishButton
         onPress={() =>
-          navigation.navigate("", {
+          navigation.navigate("GuessDescriptionFromTerm", {
             deckName: deck.name,
             cardCount: Number(cardCount)
           })
@@ -114,7 +114,7 @@ export const PlaySelectorScreen = ({
       />
       <StylishButton
         onPress={() =>
-          navigation.navigate("", {
+          navigation.navigate("GuessTermFromDescription", {
             deckName: deck.name,
             cardCount: Number(cardCount)
           })

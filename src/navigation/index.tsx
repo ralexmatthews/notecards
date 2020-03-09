@@ -12,6 +12,8 @@ import { AddNotecardScreen } from "./AddNotecardScreen";
 import { BackButton } from "../components/BackButton";
 import { PlaySelectorScreen } from "./PlaySelectorScreen";
 import { MultipleChoiceScreen } from "./MultipleChoiceScreen";
+import { GuessDescriptionFromTermScreen } from "./GuessDescriptionFromTermScreen";
+import { GuessTermFromDescriptionScreen } from "./GuessTermFromDescriptionScreen";
 
 const Stack = createStackNavigator();
 
@@ -108,6 +110,30 @@ export const NavigationRoot = () => {
             navigation: NavigationProp<any, any>;
           }) => ({
             headerTitle: "Multiple Choice Quiz",
+            headerLeft: () => <BackButton navigation={navigation} />
+          })}
+        />
+        <Stack.Screen
+          name="GuessDescriptionFromTerm"
+          component={GuessDescriptionFromTermScreen}
+          options={({
+            navigation
+          }: {
+            navigation: NavigationProp<any, any>;
+          }) => ({
+            headerTitle: "Guess Description From Term",
+            headerLeft: () => <BackButton navigation={navigation} />
+          })}
+        />
+        <Stack.Screen
+          name="GuessTermFromDescription"
+          component={GuessTermFromDescriptionScreen}
+          options={({
+            navigation
+          }: {
+            navigation: NavigationProp<any, any>;
+          }) => ({
+            headerTitle: "Guess Term From Description",
             headerLeft: () => <BackButton navigation={navigation} />
           })}
         />
