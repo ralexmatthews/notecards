@@ -11,7 +11,7 @@ export const PageWrapper = styled(props => {
     <ScrollView
       keyboardShouldPersistTaps="never"
       keyboardDismissMode="on-drag"
-      style={{ height: height - headerHeight }}
+      contentContainerStyle={{ height: height - headerHeight - 50 }}
       {...props}
     />
   );

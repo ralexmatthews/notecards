@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect } from "react";
-import { assoc, prop, update, equals } from "ramda";
+import { assoc, prop, update, equals, remove } from "ramda";
 import { FlatList, Alert, ScrollView } from "react-native";
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import { TextInput, Text, Button, View } from "../react-native-defaults";
@@ -121,6 +121,18 @@ export const DeckManagement = ({
           renderItem={({ item }) => (
             <ListItem
               subText={item.description}
+              onDelete={() =>
+                setDeckState(currentDeckState => ({
+                  ...currentDeckState,
+                  notecards: remove(
+                    currentDeckState.notecards.findIndex(
+                      currentNotecard => currentNotecard.term === item.term
+                    ),
+                    1,
+                    currentDeckState.notecards
+                  )
+                }))
+              }
               onPress={() => {
                 navigation.navigate("EditNotecard", {
                   id: createNavigationValue({

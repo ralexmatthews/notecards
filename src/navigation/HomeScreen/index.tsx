@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { FlatList } from "react-native";
+import { FlatList, Alert } from "react-native";
+import { remove } from "ramda";
 import { Ionicons } from "@expo/vector-icons";
+import { NavigationProp } from "@react-navigation/native";
 import { useDecksContext } from "../../context/decks";
 import { ListItem } from "../../components/ListItem";
 import { Text } from "../../components/react-native-defaults";
 import { blue } from "../../utils/colors";
-import { NavigationProp } from "@react-navigation/native";
 
 const NoDecksText = styled(Text)`
   text-align: center;
@@ -18,12 +19,35 @@ export const HomeScreen = ({
 }: {
   navigation: NavigationProp<any, any>;
 }) => {
-  const [decks] = useDecksContext();
+  const [decks, setDecks] = useDecksContext();
   return decks.length ? (
     <FlatList
       data={decks}
       renderItem={({ item }) => (
         <ListItem
+          onDelete={() => {
+            Alert.alert(
+              "Delete Deck?",
+              "Are you sure you wish to delete this deck? this cannot be undone",
+              [
+                {
+                  text: "Delete",
+                  style: "destructive",
+                  onPress: () =>
+                    setDecks(currentDecks =>
+                      remove(
+                        currentDecks.findIndex(deck => deck.name === item.name),
+                        1,
+                        currentDecks
+                      )
+                    )
+                },
+                {
+                  text: "Cancel"
+                }
+              ]
+            );
+          }}
           onPress={() =>
             navigation.navigate("EditDeck", { deckName: item.name })
           }
