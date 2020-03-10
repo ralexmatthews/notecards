@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Notecards",
-    "slug": "notecards",
+    "name": "Termy",
+    "slug": "termy",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": ["ios", "android"],
