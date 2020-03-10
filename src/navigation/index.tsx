@@ -2,6 +2,7 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer, NavigationProp } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { useColorScheme } from "react-native-appearance";
 import { HomeScreen } from "./HomeScreen";
 import { background, text, backgroundAccent, blue } from "../utils/colors";
 import { positiveHeaderButtonStyles } from "../utils/navigation";
@@ -18,15 +19,16 @@ import { GuessTermFromDescriptionScreen } from "./GuessTermFromDescriptionScreen
 const Stack = createStackNavigator();
 
 export const NavigationRoot = () => {
+  const colorScheme = useColorScheme();
   return (
     <NavigationContainer
       theme={{
         dark: true,
         colors: {
           primary: blue,
-          background,
-          card: backgroundAccent,
-          text,
+          background: background({ theme: { isDark: colorScheme === "dark" } }),
+          card: backgroundAccent({ theme: { isDark: colorScheme === "dark" } }),
+          text: text({ theme: { isDark: colorScheme === "dark" } }),
           border: "rgb(10, 10, 11)"
         }
       }}

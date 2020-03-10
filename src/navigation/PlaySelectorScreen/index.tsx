@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Ionicons } from "@expo/vector-icons";
+import { useColorScheme } from "react-native-appearance";
 import { Route, NavigationProp } from "@react-navigation/native";
 import { PageWrapper } from "../../components/PageWrapper";
 import { StylishButton } from "../../components/StylishButton";
@@ -40,6 +41,7 @@ export const PlaySelectorScreen = ({
 }) => {
   const [deck] = useDeck(route.params.deckName);
   const [cardCount, setCardCount] = useState(`${deck.notecards.length}`);
+  const colorScheme = useColorScheme();
 
   return (
     <PageWrapper>
@@ -59,7 +61,7 @@ export const PlaySelectorScreen = ({
           }
           name="md-arrow-dropleft"
           size={42}
-          style={{ color: text }}
+          style={{ color: text({ theme: { isDark: colorScheme === "dark" } }) }}
         />
         <TextInput
           value={`${cardCount}`}
@@ -89,7 +91,7 @@ export const PlaySelectorScreen = ({
           }
           name="md-arrow-dropright"
           size={42}
-          style={{ color: text }}
+          style={{ color: text({ theme: { isDark: colorScheme === "dark" } }) }}
         />
       </CardCountWrapper>
       {Number(cardCount) >= 4 && (

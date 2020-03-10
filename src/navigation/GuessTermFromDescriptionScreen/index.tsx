@@ -40,6 +40,7 @@ export const GuessTermFromDescriptionScreen = ({
       style={{ height: "100%" }}
       horizontal
       pagingEnabled
+      showsHorizontalScrollIndicator={false}
     >
       {deckToQuiz.map(notecard => (
         <GuessingNotecard

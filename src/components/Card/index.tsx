@@ -14,6 +14,8 @@ const CardInner = styled(View)`
   border-radius: 16px;
   padding: 20px;
   background-color: ${backgroundAccent};
+  box-shadow: ${({ theme }) =>
+    theme.isDark ? "0px 0px 6px #888" : "0px 0px 8px #555"};
 `;
 
 export const Card = (props: any) => {

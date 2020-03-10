@@ -47,10 +47,7 @@ export const MultipleChoiceCard = ({
   return (
     <Card>
       <QuestionTitle>{notecard.description}</QuestionTitle>
-      <Space
-        vertical={Sizes.large}
-        style={{ backgroundColor: backgroundAccent }}
-      />
+      <Space vertical={Sizes.large} />
       {options.map(option => (
         <StylishButton
           active={

@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableHighlight } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { View, Text } from "../react-native-defaults";
 import styled from "styled-components";
 
@@ -14,8 +14,9 @@ const ButtonBackground = styled(View)`
   padding: 8px;
   border-radius: 4px;
   border-width: 1px;
-  border-color: white;
-  box-shadow: 0px 0px 5px #fff;
+  border-color: ${({ theme }) => (theme.isDark ? "white" : "#888")};
+  box-shadow: ${({ theme }) =>
+    theme.isDark ? "0px 0px 5px #fff" : "0px 0px 3px #888"};
 `;
 const TextForeground = styled(Text)`
   color: white;
@@ -40,7 +41,7 @@ export const StylishButton = ({
   wrong?: boolean;
 }) => {
   return (
-    <TouchableHighlight onPress={onPress}>
+    <TouchableOpacity onPress={onPress}>
       <ButtonBackground
         style={[
           {
@@ -56,6 +57,6 @@ export const StylishButton = ({
       >
         {title ? <TextForeground>{title}</TextForeground> : children}
       </ButtonBackground>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };

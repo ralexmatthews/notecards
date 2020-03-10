@@ -3,16 +3,18 @@ import styled from "styled-components";
 import { View, Text } from "../react-native-defaults";
 import { TouchableHighlight } from "react-native";
 import Swipeout from "react-native-swipeout";
-import { text } from "../../utils/colors";
+import { text, appRed, background } from "../../utils/colors";
 
 const SubText = styled(Text)`
-  color: rgb(178, 178, 181);
+  color: ${({ theme }) =>
+    theme.isDark ? "rgb(178, 178, 181)" : "rgb(122, 122, 124)"};
   font-size: 12px;
 `;
 const ListItemRoot = styled(View)`
   width: 100%;
   border-bottom-width: 1px;
   border-color: ${text};
+  background-color: ${background};
   padding: 8px;
   display: flex;
   flex-direction: row;
@@ -41,7 +43,7 @@ export const ListItem = ({
             {
               text: "Delete",
               color: text,
-              backgroundColor: "rgb(255, 100, 100)",
+              backgroundColor: appRed,
               onPress: onDelete
             }
           ]

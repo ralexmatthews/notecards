@@ -7,11 +7,9 @@ import {
   TextInputProps,
   Button as RNButton
 } from "react-native";
-import { text, background, borderColor } from "../../utils/colors";
+import { text, borderColor } from "../../utils/colors";
 
-export const View = styled(RNView)`
-  background-color: ${background};
-`;
+export const View = styled(RNView)``;
 export const Text = styled(RNText)`
   color: ${text};
   font-size: 16px;
